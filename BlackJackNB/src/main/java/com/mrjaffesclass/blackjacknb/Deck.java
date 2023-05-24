@@ -4,6 +4,7 @@
  */
 package com.mrjaffesclass.blackjacknb;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -30,14 +31,45 @@ public class Deck {
         }
     }
     
+    public void shuffle() {
+        ArrayList<Card> tempDeck = new ArrayList<Card>();
+        //Use random
+        Random random = new Random();
+        int randomCardIndex = 0;
+        int originalSize = this.cards.size();
+        for(int i = 0; i < originalSize; i++) {
+            //Generate random index rand.nextInt((max-min) + 1) + min;
+            randomCardIndex = random.nextInt((this.cards.size()- 1 - 0) + 1) + 0;
+            tempDeck.add(this.cards.get(randomCardIndex));
+            //Remove from original deck
+            this.cards.remove(randomCardIndex); 
+        }
+        this.cards = tempDeck;
+    }
+    
     public String toString() {
         String cardListOutput ="";
-        int i = 0;
         for (Card aCard : this.cards) {
-            cardListOutput += "/n" + i + "-" + aCard.toString();
-            i++;
+            cardListOutput += "/n" + aCard.toString(); 
         }
         return cardListOutput;
     }
     
+    public void removeCard(int i){
+        this.cards.remove(i);
+}
+    
+    public Card getCard (int i) {
+        return this.cards.get(i);
+    }
+    
+    public void addCard (Card addCard) {
+        this.cards.add(addCard);
+    }
+    
+    //Draws From the Deck
+    public void Draw (Deck comingFrom) {
+        this.cards.add(comingFrom.getCard(0));
+        comingFrom.removeCard(0);
+    }
 }
